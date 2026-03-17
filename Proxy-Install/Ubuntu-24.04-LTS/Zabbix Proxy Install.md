@@ -19,6 +19,8 @@ You can check this by using this command:
 ```bash
 hostname
 ```
+
+---
 #### Install:
 ```bash
 wget -q https://raw.githubusercontent.com/DentechNL/fb5cc8a1-6a1d-4427-a214-b914cc47b048/main/Proxy-Install/Ubuntu-24.04-LTS/installProxy.sh -O installProxy.sh
@@ -41,7 +43,7 @@ sudo ./installProxy.sh
 
 3.  When the installation is done the installer wil show the PSK identity and the PSK value. Copy these and save them temporarily in notepad or someting like it.
 
->[!caution]
+>[!warning]
 > Do not share this key with anyone and make sure to delete it at the end of the connection process!
 
 4.  Open the web UI of the main Zabbix server and go to *Administration*
