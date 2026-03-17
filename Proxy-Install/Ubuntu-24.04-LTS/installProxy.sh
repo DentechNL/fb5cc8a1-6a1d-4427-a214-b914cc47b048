@@ -28,32 +28,57 @@ echo "[2/12] Setting timezone to Europe/Amsterdam..."
 sudo timedatectl set-timezone Europe/Amsterdam
 sudo timedatectl set-ntp true
 
-
 ##############################################
-# 2) Install Zabbix Repository
+# 2) Install Dependencies
 ##############################################
 
-echo "[3/12] Downloading Zabbix 7.4 repository package..."
+echo "[3/12] Installing dependencies..."
+
+# Install dependencies
+sudo apt install -y \
+    libmono-system-configuration4.0-cil \
+    libmono-system-core4.0-cil \
+    libmono-system-numerics4.0-cil \
+    libmono-corlib4.5-dll \
+    libmono-system-security4.0-cil \
+    libmono-system-xml4.0-cil \
+    libmono-system4.0-cil \
+    mono-runtime-common \
+    zabbix-proxy-sqlite3 \
+    libcares2 \
+    libevent-extra-2.1-7t64 \
+    libevent-pthreads-2.1-7t64 \
+    libodbc2 \
+    libopenipmi0t64 \
+    sqlite3 \
+    fping
+
+echo "All missing dependencies should now be installed."
+##############################################
+# 3) Install Zabbix Repository
+##############################################
+
+echo "[4/12] Downloading Zabbix 7.4 repository package..."
 REPO_DEB="zabbix-release_latest_7.4+ubuntu24.04_all.deb"
 wget -q "https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/${REPO_DEB}"
 
-echo "[4/12] Installing Zabbix repository..."
+echo "[5/12] Installing Zabbix repository..."
 sudo dpkg -i "$REPO_DEB"
 
-echo "[5/12] Updating APT package index..."
+echo "[6/12] Updating APT package index..."
 sudo apt update -y
 
 
 ##############################################
-# 3) Install Zabbix Proxy (SQLite)
+# 4) Install Zabbix Proxy (SQLite)
 ##############################################
 
-echo "[6/12] Installing Zabbix Proxy (SQLite)..."
+echo "[7/12] Installing Zabbix Proxy (SQLite)..."
 sudo apt install -y zabbix-proxy-sqlite3
 
 
 ##############################################
-# 4) Ask user for server IP
+# 5) Ask user for server IP
 ##############################################
 
 echo
@@ -65,7 +90,7 @@ if ! [[ "$ZBX_SERVER_IP" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
 fi
 
 ##############################################
-# 4b) Automatically determine hostname/identity
+# 5b) Automatically determine hostname/identity
 ##############################################
 
 PROXY_HOSTNAME="$(hostname -f 2>/dev/null || hostname)"
@@ -74,7 +99,7 @@ echo "[INFO] Using system hostname for identity: ${PROXY_HOSTNAME}"
 
 
 ##############################################
-# 5) Paths
+# 6) Paths
 ##############################################
 
 CONF="/etc/zabbix/zabbix_proxy.conf"
@@ -86,10 +111,10 @@ OVERRIDE_FILE="${OVERRIDE_DIR}/override.conf"
 
 
 ##############################################
-# 6) Prepare directories
+# 7) Prepare directories
 ##############################################
 
-echo "[7/12] Preparing directories..."
+echo "[8/12] Preparing directories..."
 
 sudo install -d -m 0755 /etc/zabbix
 sudo install -d -m 0755 /var/lib/zabbix
@@ -101,10 +126,10 @@ fi
 
 
 ##############################################
-# 7) Generate PSK
+# 8) Generate PSK
 ##############################################
 
-echo "[8/12] Generating TLS PSK..."
+echo "[9/12] Generating TLS PSK..."
 
 if command -v openssl >/dev/null 2>&1; then
   PSK_VAL="$(openssl rand -hex 32)"
@@ -119,10 +144,10 @@ sudo chmod 600 "$PSK_FILE"
 
 
 ##############################################
-# 8) Apply systemd override (correct Type=forking)
+# 9) Apply systemd override (correct Type=forking)
 ##############################################
 
-echo "[9/12] Applying systemd override (Type=forking)..."
+echo "[10/12] Applying systemd override (Type=forking)..."
 
 sudo mkdir -p "$OVERRIDE_DIR"
 sudo tee "$OVERRIDE_FILE" >/dev/null <<'EOF'
@@ -141,10 +166,10 @@ sudo systemctl daemon-reload
 
 
 ##############################################
-# 9) Write proxy config
+# 10) Write proxy config
 ##############################################
 
-echo "[10/12] Writing Zabbix Proxy configuration..."
+echo "[11/12] Writing Zabbix Proxy configuration..."
 
 sudo tee "$CONF" >/dev/null <<EOF
 ##### ACTIVE PROXY #####
@@ -179,7 +204,7 @@ EOF
 sudo chown zabbix:zabbix "$CONF" "$PSK_FILE"
 
 ##############################################
-# 10) Show summary for Zabbix Frontend (English)
+# 11) Show summary for Zabbix Frontend (English)
 ##############################################
 
 echo
@@ -206,10 +231,10 @@ echo " Override    : ${OVERRIDE_FILE}"
 echo "=============================================="
 
 ##############################################
-# 11) Start service
+# 12) Start service
 ##############################################
 
-echo "[11/12] Starting Zabbix Proxy service..."
+echo "[12/12] Starting Zabbix Proxy service..."
 
 sudo systemctl enable zabbix-proxy --now
 sudo systemctl restart zabbix-proxy
