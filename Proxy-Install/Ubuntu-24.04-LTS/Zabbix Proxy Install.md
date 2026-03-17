@@ -1,5 +1,24 @@
 # Zabbix Proxy Install
 ---
+#### Preparation:
+
+Change the hostname of the device using this command:
+
+```bash
+sudo hostnamectl set-hostname <new hostname>
+```
+
+Reboot the device to make sure the hostname is changed:
+
+```bash
+sudo reboot
+```
+
+You can check this by using this command:
+
+```bash
+hostname
+```
 #### Install:
 ```bash
 wget -q https://raw.githubusercontent.com/DentechNL/fb5cc8a1-6a1d-4427-a214-b914cc47b048/main/Proxy-Install/Ubuntu-24.04-LTS/installProxy.sh -O installProxy.sh
@@ -9,8 +28,8 @@ chmod +x installProxy.sh
 sudo ./installProxy.sh
 ```
 
-> [!info]
-> Use: `sudo apt install wget -y` , if **wget** is not installed yet
+> ℹ️ **Info:** Use `sudo apt install wget -y` if wget is not installed
+
 
 ---
 
