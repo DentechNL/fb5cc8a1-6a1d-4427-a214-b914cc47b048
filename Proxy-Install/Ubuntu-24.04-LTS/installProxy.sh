@@ -178,22 +178,8 @@ EOF
 
 sudo chown zabbix:zabbix "$CONF" "$PSK_FILE"
 
-
 ##############################################
-# 10) Start service
-##############################################
-
-echo "[11/12] Starting Zabbix Proxy service..."
-
-sudo systemctl enable zabbix-proxy --now
-sudo systemctl restart zabbix-proxy
-
-echo
-systemctl status zabbix-proxy --no-pager -l || true
-
-
-##############################################
-# 11) Show summary for Zabbix Frontend (English)
+# 10) Show summary for Zabbix Frontend (English)
 ##############################################
 
 echo
@@ -218,3 +204,15 @@ echo " Config File : ${CONF}"
 echo " PSK File    : ${PSK_FILE}"
 echo " Override    : ${OVERRIDE_FILE}"
 echo "=============================================="
+
+##############################################
+# 11) Start service
+##############################################
+
+echo "[11/12] Starting Zabbix Proxy service..."
+
+sudo systemctl enable zabbix-proxy --now
+sudo systemctl restart zabbix-proxy
+
+echo
+systemctl status zabbix-proxy --no-pager -l || true
