@@ -28,8 +28,8 @@ chmod +x installProxy.sh
 sudo ./installProxy.sh
 ```
 
-> ℹ️ **Info:** Use `sudo apt install wget -y` if wget is not installed
-
+> [!NOTE]
+> Use `sudo apt install wget -y` if wget is not installed
 
 ---
 
