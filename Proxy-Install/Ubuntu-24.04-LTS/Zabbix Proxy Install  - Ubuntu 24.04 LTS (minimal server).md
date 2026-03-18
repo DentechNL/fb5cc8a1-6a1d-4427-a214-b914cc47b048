@@ -1,4 +1,4 @@
-# Zabbix Proxy Install
+# Zabbix Proxy Install  - Ubuntu 24.04 LTS (minimal server)
 ---
 #### Preparation:
 
