@@ -1,4 +1,4 @@
-# Zabbix Agent2 Install  - Ubuntu 24.04 LTS (minimal server)
+# Zabbix Agent2 Install  - Ubuntu 24.04 LTS
 ---
 #### Install:
 ```bash
