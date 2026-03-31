@@ -149,6 +149,8 @@ sudo chown zabbix:zabbix "$CONF" "$PSK_FILE"
 # 9) Summary
 ############################################################
 
+LOCAL_IP=$(ip route get 1 | awk '{print $7}')
+
 echo
 echo "=============================================="
 echo "     ZABBIX AGENT 2 REGISTRATION INFORMATION"
@@ -158,6 +160,9 @@ echo "Use these values in the Zabbix Frontend:"
 echo
 echo "Hostname (must match exactly):"
 echo "    ${AGENT_HOSTNAME}"
+echo
+echo "IP-address:"
+echo "    ${LOCAL_IP}"
 echo
 echo "TLS PSK Identity:"
 echo "    ${AGENT_HOSTNAME}"
