@@ -140,9 +140,6 @@ TLSConnect=psk
 TLSAccept=psk
 TLSPSKIdentity=${AGENT_HOSTNAME}
 TLSPSKFile=${PSK_FILE}
-
-##### USER #####
-User=zabbix
 EOF
 
 sudo chown zabbix:zabbix "$CONF" "$PSK_FILE"

@@ -4,9 +4,9 @@
 ```bash
 wget -q https://raw.githubusercontent.com/DentechNL/fb5cc8a1-6a1d-4427-a214-b914cc47b048/refs/heads/main/Zabbix-Agent2/Ubuntu-24.04-LTS/installAgent2.sh -O installAgent2.sh
 
-chmod +x installProxy.sh
+chmod +x installAgent2.sh
 
-sudo ./installProxy.sh
+sudo ./installAgent2.sh
 ```
 
 > [!NOTE]
